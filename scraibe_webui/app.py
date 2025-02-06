@@ -1,5 +1,7 @@
 from .utils.appconfigloader import AppConfigLoader
 from .ui import gradio_Interface
+from fastapi import FastAPI
+from .api import app as api_app
 
 class App(AppConfigLoader):
     def __init__(self, config: str = None, **kwargs):
@@ -14,6 +16,8 @@ class App(AppConfigLoader):
                       respective section in `config.yaml`.
         """
         super(App, self).__init__(config, **kwargs)
+        self.api_app = FastAPI()
+        self.api_app.mount("/api", api_app)
 
     def start(self):
         """
