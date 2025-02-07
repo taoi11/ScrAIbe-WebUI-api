@@ -82,3 +82,44 @@ ScrAIbe-WebUI is proudly open source and licensed under the GPL-3.0 license. Thi
 ---
 
 Join us in making ScrAIbe-WebUI even better! 🚀
+
+## API Endpoints
+
+ScrAIbe-WebUI now includes API endpoints to bypass the front end and programmatically call the backend to get transcriptions. The API is built using FastAPI and provides the following endpoints:
+
+### Transcribe Audio
+
+Endpoint: `/api/transcribe`
+
+Method: `POST`
+
+Description: Receives an audio file and returns the transcription.
+
+#### Request
+
+- `file`: The audio file to be transcribed.
+- `task`: The transcription task to be performed. Options are "Auto Transcribe", "Transcribe", and "Diarisation".
+- `num_speakers`: (Optional) The number of speakers in the audio file.
+- `translate`: (Optional) Whether to translate the transcription to English.
+- `language`: (Optional) The language of the audio file.
+
+#### Response
+
+- `transcription`: The transcribed text.
+- `json`: The transcription result in JSON format (for "Auto Transcribe" and "Diarisation" tasks).
+
+#### Example
+
+```bash
+curl -X POST "http://localhost:7860/api/transcribe" -F "file=@path/to/audio/file.wav" -F "task=Auto Transcribe" -F "num_speakers=2" -F "translate=false" -F "language=English"
+```
+
+### Running the API
+
+To run the API, use the following command:
+
+```bash
+uvicorn scraibe_webui.api:app --host 0.0.0.0 --port 8000
+```
+
+This will start the FastAPI server and expose the API endpoints at `http://localhost:8000/api/...`.
